@@ -25,6 +25,7 @@ char blockModel[][4][4] = {
 };
 
 int main(void) {
+    RemoveCursor();
 	SetCurrentCursorPos(0, 0);
 	ShowBlock(blockModel[0]);
 
