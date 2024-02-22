@@ -69,3 +69,34 @@ void BlockDown(void) {
 	SetCurrentCursorPos(curPosX, curPosY);
 	ShowBlock(blockModel[GetCurrentBlockIdx()]);
 }
+
+// 블록을 왼쪽으로 한칸 이동
+void ShiftLeft(void) {
+	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+	curPosX -= 2;
+
+	SetCurrentCursorPos(curPosX, curPosY);
+	ShowBlock(blockModel[GetCurrentBlockIdx()]);
+}
+
+// 블록을 오른쪽으로 한칸 이동
+void ShiftRight(void) {
+	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+	curPosX += 2;
+
+	SetCurrentCursorPos(curPosX, curPosY);
+	ShowBlock(blockModel[GetCurrentBlockIdx()]);
+}
+
+// 블록을 90도 회전
+void RotateBlock(void) {
+	int nextRotSte;
+
+	DeleteBlock(blockModel[GetCurrentBlockIdx()]);
+
+	nextRotSte = (rotateSte + 1) % 4;
+	rotateSte = nextRotSte;
+
+	SetCurrentCursorPos(curPosX, curPosY);
+	ShowBlock(blockModel[GetCurrentBlockIdx()]);
+}

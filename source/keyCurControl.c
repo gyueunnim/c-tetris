@@ -30,3 +30,36 @@ void SetCurrentCursorPos(int x, int y) {
 	COORD pos = { x, y };
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
+
+// 키 입력 처리
+void ProcessKeyInput(void) {
+	int i;
+	int key;
+
+	for (i = 0; i < KEY_SENSITIVE; i++) {
+		if (_kbhit() != 0) {
+			key = _getch();
+
+			switch (key) {
+			case LEFT:
+				ShiftLeft();
+				break;
+			case RIGHT:
+				ShiftRight();
+				break;
+			case UP:
+				RotateBlock();
+				break;
+			}
+		}
+		if (i % keyDelayRate == 0)
+			Sleep(SYS_DELAY);
+	}
+}
+
+// 
+void InitKeyDelayRate(int rate) {
+	if (rate < 1)
+		return;
+	keyDelayRate = rate;
+}
