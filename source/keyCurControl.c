@@ -3,6 +3,18 @@
 #include <conio.h>
 #include <Windows.h>
 #include "point.h"
+#include "blockStageControl.h"
+
+#define KEY_SENSITIVE 100
+#define SYS_DELAY 20
+
+#define LEFT 75
+#define RIGHT 77
+#define UP 72
+#define DOWN 80
+#define SPACE 32
+
+static int keyDelayRate; // 값이 클수록 속도 증가
 
 
 // 깜빡 거리는 커서 제거
@@ -32,7 +44,7 @@ void SetCurrentCursorPos(int x, int y) {
 }
 
 // 키 입력 처리
-void ProcessKeyInput(void) {
+int ProcessKeyInput(void) {
 	int i;
 	int key;
 
@@ -50,16 +62,25 @@ void ProcessKeyInput(void) {
 			case UP:
 				RotateBlock();
 				break;
+			case SPACE:
+				SolidCurrentBlock();
+				return 1;
 			}
 		}
 		if (i % keyDelayRate == 0)
 			Sleep(SYS_DELAY);
 	}
+	return 0;
 }
 
-// 
+// 속도 초기화
 void InitKeyDelayRate(int rate) {
 	if (rate < 1)
 		return;
 	keyDelayRate = rate;
+}
+
+// 속도 변화
+void KeyDelaySpeedCtl(int addSpeed) {
+	keyDelayRate += addSpeed;
 }
